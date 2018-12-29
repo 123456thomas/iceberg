@@ -1,0 +1,54 @@
+{% extends 'goods/single.html' %}
+
+{% block single %}
+<div style="width:1200px;">
+    <div style="width:800px;margin:20px auto">
+        <h4>邮寄地址：</h4>
+        <ul class="list-group">
+            <li style="height:50px;" class="list-group-item">
+                {{ request.session.user.adress }}
+                <span class="badge">默认</span>
+
+            </li>
+            {% for i in request.session.addresslis %}
+            <li style="height:50px;" class="list-group-item">
+                {{i.adress}}
+                <span class="badge">
+                    <a href="/iceberg/updateaddre/?sid={{i.id}}"><button type="button" class="btn btn-primary btn-sm">改为默认</button></a>
+                </span>
+
+            </li>
+            {% endfor %}
+            <li class="list-group-item" style="height:50px;">
+                <span class="badge">
+                    <a href="{% url 'users:addaddress' %}"><button type="button" class="btn btn-success btn-sm">添加地址</button></a>
+                </span>
+            </li>
+            <li class="list-group-item" style="height:50px;">
+                <span class="badge">默认</span>
+                联系电话：{{request.session.user.phone}}
+            </li>
+
+
+        </ul>
+
+        <ul class="list-group">
+            {% for u in request.session.carsgood1 %}
+            <li class="list-group-item">
+                <span class="badge">{{u.goodnum}}</span>
+                <img width=80 height=100 src="/{{u.goodimg}}" alt="">
+                <a href="/iceberg/single/?seach={{u.id}}">{{u.goodname}}</a>
+            </li>
+            {% empty %}
+            您的还没有订单
+            {% endfor %}
+            <li class="list-group-item">
+                <span>总额：</span>{{sumcount}}元
+                <span class="badge"><a href="{% url 'cars:paysgoods' %}"><button class="btn btn-success btn-sm">结算</button></a></span>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'users/register.html' %}
+
+{% block register %}
+{% load static %}
+<script type="text/javascript" src="/static/js/addr.js"></script>
+<h3>添加地址</h3>
+<form action="{% url 'users:addaddress' %}" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        地区：<select id="area" required name="diqu"></select>
+        省：<select id="cmbProvince" required name="province"></select>
+        市：<select id="cmbCity" required name="city"></select>
+        区：<select id="cmbArea" required  name="qu"></select>
+        <br/><br/>
+        <p>详细地址：<input type="text" required name="intro"></p>
+    </div>
+
+    <button type="submit" class="btn btn-default">提交</button>
+</form>
+{{msg}}
+
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+addressInit('area', 'cmbProvince', 'cmbCity', 'cmbArea', '西北地区', '北京', '市辖区', '东城区');
+
+</script>
+{% endblock %}

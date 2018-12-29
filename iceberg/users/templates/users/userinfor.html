@@ -1,0 +1,56 @@
+{% extends 'users/register.html' %}
+
+{% block register %}
+{% load static %}
+{% if request.session.user is None %}
+您还没登录，去登录吧
+{% else %}
+<img width=60 height=60 class="img-circle" src='/{{request.session.user.header}}' alt="">
+<table>
+    <tr><td>昵称：</td><td>{{request.session.user.pickname}}</td></tr>
+    <tr><td>邮箱：</td><td>{{request.session.user.email}}</td></tr>
+    <tr><td>地址：</td>
+        <td>
+            {% if request.session.user.adress == '' %}
+                未填
+            {% else %}
+                {{request.session.user.adress}}
+            {% endif %}
+        </td>
+    </tr>
+    <tr><td>手机：</td>
+        <td>
+            {% if request.session.user.phone == '' %}
+                未填
+            {% else %}
+                {{request.session.user.phone}}
+            {% endif %}
+        </td>
+    </tr>
+</table>
+
+<h4><a href="{% url 'users:updateuser' %}">完善个人信息</a></h4>
+<h4><a href="{% url 'users:baseinfo' %}">修改基本信息</a></h4>
+<h4><a href="{% url 'users:ordered' %}">我的订单</a></h4>
+<br>
+<p>我的店铺：</p>
+            {% for s in request.session.storelis %}
+            <a href="/iceberg/mystore/?sid={{s.id}}">{{s.storename}}</a>
+            <br>
+            {% empty %}
+            您还没店铺
+            {% endfor %}
+
+{% endif %}
+<br>
+<h6 style="color:blue">{{msg}}</h6>
+
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+        addressInit('area', 'cmbProvince', 'cmbCity', 'cmbArea', '西北地区', '北京', '市辖区', '东城区');
+        //addressInit('Select1', 'Select2', 'Select3');
+
+</script>
+{% endblock %}

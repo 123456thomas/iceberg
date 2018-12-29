@@ -1,0 +1,33 @@
+{% extends 'users/register.html' %}
+
+{% block register %}
+{% load static %}
+<script type="text/javascript" src="/static/js/addr.js"></script>
+<h3>店铺申请</h3>
+<form action="{% url 'users:createstore' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-group">
+        <label>店铺名字</label>
+        <input type="text" autocomplete="off"  class="form-control" maxlength=20 required name="storename" value="">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputFile">门店图片</label>
+        <input type="file" required id="exampleInputFile" name="storeimg" value="">
+    </div>
+    <div class="form-group">
+        <label >店铺信息</label>
+        <textarea id="" required cols="30" rows="10" name="info" maxlength=96></textarea>
+    </div>
+    <button type="submit" class="btn btn-default">提交</button>
+</form>
+
+{{msg}}
+
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+addressInit('area', 'cmbProvince', 'cmbCity', 'cmbArea', '西北地区', '北京', '市辖区', '东城区');
+
+</script>
+{% endblock %}

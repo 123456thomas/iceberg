@@ -1,0 +1,47 @@
+{% extends 'users/register.html' %}
+
+{% block register %}
+{% load static %}
+<script type="text/javascript" src="/static/js/addr.js"></script>
+<h3>基本信息</h3>
+<form action="{% url 'users:baseinfo' %}" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <label></label>
+        <input type="text" autocomplete="off"  class="form-control" maxlength=20 placeholder="昵称" name="pickname" required value={{request.session.user.pickname}}>
+    </div>
+    <div class="form-group">
+        <label for="inputEmail3" class="col-sm-2 control-label">邮箱</label>
+        <div class="col-sm-10">
+          <input type="email" class="form-control" autocomplete="off" id="inputEmail3" required name="email" value={{request.session.user.email}}>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label">原始密码</label>
+        <div class="col-sm-10">
+          <input type="password" class="form-control" minlength=6 maxlength=12 autocomplete="off"  required name="oripassword" value="">
+        </div>
+     </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">新密码</label>
+        <div class="col-sm-10">
+          <input type="password" class="form-control" minlength=6 maxlength=12 autocomplete="off"  placeholder="可选" name="password1" value="">
+        </div>
+     </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">再次输入密码</label>
+        <div class="col-sm-10">
+          <input type="password" class="form-control" minlength=6 maxlength=12 autocomplete="off" name="password2" value="">
+        </div>
+     </div>
+    <button type="submit" class="btn btn-default" onclick="return confirm('是否确定修改')">修改</button>
+</form>
+{{msg}}
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+
+</script>
+{% endblock %}

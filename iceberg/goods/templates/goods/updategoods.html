@@ -1,0 +1,94 @@
+{% extends 'goods/upgoods.html' %}
+
+{% block ulhead %}
+<ul class="nav nav-pills">
+    <li role="presentation"><a href="{% url 'users:index' %}">HOME </a></li>
+    <li role="presentation"><a href="{% url 'store:mystore' %}">店铺信息 </a></li>
+    <li role="presentation"><a href="{% url 'store:mystore' %}">上传商品 </a></li>
+    <li role="presentation"><a href="{% url 'goods:goodsinfo' %}">查看商品列表</a></li>
+</ul>
+{% endblock %}
+
+{% block content %}
+<br>
+<br>
+<form class="form-horizontal" method="post" enctype="multipart/form-data"
+      action="{% url 'goods:updategoods' %}">
+    {% csrf_token %}
+    <div class="form-group">
+        <label class="col-sm-2 control-label">商品名称</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" maxlength=30 name="waresname"
+                   value={{request.session.ware1.waresname}}>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">商品尺码</label>
+        <div class="col-sm-10">
+            <input type="text" maxlength=4 class="form-control" required placeholder="必填" name="waressize"
+                   value={{request.session.ware1.waressize}}>
+        </div>
+        <label class="col-sm-2 control-label">商品库存</label>
+        <div class="col-sm-10">
+            <input type="number" class="form-control" name="waresstock"
+                   value={{request.session.ware1.waresstock}}>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">商品价格</label>
+        <div class="input-group">
+            <div class="input-group-addon">
+                <span>RMB</span>
+            </div>
+            <input type="text" class="col-sm-2 form-control " maxlength=7
+                   onkeyup="this.value=this.value.toString().match(/^\d+(?:\.\d{0,2})?/)" required
+                   placeholder="0.00" name="waresprice" value={{request.session.ware1.waresprice}}>
+        </div>
+    </div>
+    <di class="form-group">
+        <label class="col-sm-2 control-label">商品详细信息</label>
+        <div class="col-sm-10">
+            <textarea class="form-control" rows="3" maxlength=200 name="waresinfo">
+                {{request.session.ware1.waresinfo}}
+            </textarea>
+        </div>
+    </di>
+    <div class="form-group">
+        <label for="exampleInputFile">图片0</label>
+        <input type="file" onclick="return confirm('是否确定添加')" id="exampleInputFile" autocomplete="off" placeholder="图片0"
+               name="imag0">
+
+    </div>
+    <div class="form-group">
+        <label for="exampleInputFile1">(可选)图片1</label>
+        <input type="file" id="exampleInputFile1" onclick="return confirm('是否确定添加')" autocomplete="off"
+               placeholder="图片1" name="imag1">
+
+    </div>
+    <div class="form-group">
+        <label for="exampleInputFile2">(可选)图片2</label>
+        <input type="file" id="exampleInputFile2" onclick="return confirm('是否确定添加')" autocomplete="off"
+               placeholder="图片2" name="imag2">
+
+    </div>
+    <div class="form-group">
+        <label for="exampleInputFile3">(可选)图片3</label>
+        <input type="file" id="exampleInputFile3" onclick="return confirm('是否确定添加')" autocomplete="off"
+               placeholder="图片3" name="imag3">
+
+    </div>
+    <div class="form-group">
+        <label for="exampleInputFile4">(可选)图片4</label>
+        <input type="file" id="exampleInputFile4" onclick="return confirm('是否确定添加')" autocomplete="off"
+               placeholder="图片4" name="imag4">
+
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" onclick="return confirm('是否确定修改')" class="btn btn-default">上传</button>
+        </div>
+    </div>
+</form>
+<br>
+{% endblock %}

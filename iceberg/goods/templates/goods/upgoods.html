@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>iceberg</title>
+    {% load static %}
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+
+
+    <!--jQuery (necessary for Bootstrap's JavaScript plugins) -->
+
+    <!-- Custom Theme files -->
+    <!--theme-style-->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" media="all"/>
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" type="text/css" media="all"/>
+    <!--//theme-style-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="keywords" content="Fashion Store Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template,
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design"/>
+    <script type="application/x-javascript">
+	addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }
+
+
+
+
+
+    </script>
+    <!--fonts-->
+    <style>
+		#dl{
+			position:relative;
+			left:270px;
+		}
+
+
+
+
+
+
+    </style>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Oswald:400,700,300' rel='stylesheet' type='text/css'>
+</head>
+
+<!--//fonts-->
+</head>
+<body>
+<!--header-->
+<div class="header">
+    <div class="header-top">
+        <div class="container">
+            <div class="header-grid">
+                <ul>
+                    <li><a href="#" class="scroll">Articles</a></li>
+                    <li><a href="#" class="scroll">Contact </a></li>
+                    <li><a href="{% url 'users:userinfor' %}" class="scroll">我的</a></li>
+                    <li><a href="#" class="scroll">Terms</a></li>
+                </ul>
+            </div>
+            <div class="header-grid-right" id="dl">
+                {% if request.session.user is None %}
+                <a href="{% url 'users:logins' %}" class="sign-up">登录</a>
+                <label>|</label>
+                <a href="{% url 'users:register' %}" class="sign-in">注册</a>
+                {% else %}
+                <a href="{% url 'users:userinfor' %}" class="scroll"
+                   style="color:red">{{request.session.user.pickname}}</a>
+                <img width=60 height=60 class="img-circle" src='/{{request.session.user.header}}' alt="">
+                <span><a href="{% url 'users:quite' %}" style="color:red">退出</a></span>
+                {% endif %}
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="header-bottom">
+            <div class="logo">
+                <a href="index.html"><img src="/static/images/logo.png" alt=" "></a>
+            </div>
+            <div class="ad-right">
+                <img src="/static/images/ad.png" alt=" ">
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="header-bottom-bottom">
+            <div class="top-nav">
+                <span class="menu"> </span>
+                {% block ulhead %}
+                <ul class="nav nav-pills">
+                    <li role="presentation"><a href="{% url 'users:index' %}">HOME </a></li>
+                    <li role="presentation"><a href="{% url 'store:mystore' %}">店铺信息 </a></li>
+                    <li role="presentation" class="active"><a href="{% url 'goods:upgoods' %}">上传商品 </a></li>
+                    <li role="presentation"><a href="{% url 'goods:goodsinfo' %}">查看商品列表</a></li>
+                </ul>
+                {% endblock %}
+                <div class="clearfix"></div>
+                <script>
+					$("span.menu").click(function(){
+						$(".top-nav ul").slideToggle(500, function(){
+						});
+					});
+
+
+
+
+
+                </script>
+            </div>
+            <div class="search">
+                <form>
+                    <input type="text" value="Search" onfocus="this.value = '';"
+                           onblur="if (this.value == '') {this.value = '';}">
+                    <input type="submit" value="">
+                </form>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+<!---->
+<div class="content">
+    {# 店铺信息、商品列表展示，待完成 #}
+    <div class="container">
+        {% block content %}
+        <div class="register">
+            {% block register %}
+            <form class="form-horizontal" method="post" enctype="multipart/form-data"
+                  action="{% url 'goods:upgoods' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">商品名称</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" maxlength=30 required placeholder="必填" name="waresname"
+                               value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">商品类型</label>
+                    <div>
+                        <input type="radio" checked name="category1" value="男士">男士
+                        <input type="radio" name="category1" value="女士">女士
+                        <select name="category2">
+                            <option value="冬季">冬季</option>
+                            <option value="春季">春季</option>
+                            <option value="夏季">夏季</option>
+                            <option value="秋季">秋季</option>
+                        </select>
+                    </div>
+
+
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">商品尺码</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" maxlength=4 required placeholder="必填" name="waressize" value="">
+                    </div>
+                    <label class="col-sm-2 control-label">商品库存</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control" required placeholder="必填" name="waresstock" value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">商品价格</label>
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <span>RMB</span>
+                        </div>
+                        <input type="text" class="col-sm-2 form-control " maxlength=7
+                               onkeyup="this.value=this.value.toString().match(/^\d+(?:\.\d{0,2})?/)" required
+                               placeholder="0.00" name="waresprice" value="">
+                    </div>
+                </div>
+                <di class="form-group">
+                    <label class="col-sm-2 control-label">商品详细信息</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" rows="3" required maxlength=200 name="waresinfo"></textarea>
+                    </div>
+                </di>
+                <div class="form-group">
+                    <label for="exampleInputFile">(必选)图片0</label>
+                    <input type="file" id="exampleInputFile" autocomplete="off" placeholder="默认图片" required
+                           name="imag0">
+
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputFile1">(可选)图片1</label>
+                    <input type="file" id="exampleInputFile1" autocomplete="off" placeholder="图片1" name="imag1">
+
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputFile2">(可选)图片2</label>
+                    <input type="file" id="exampleInputFile2" autocomplete="off" placeholder="图片2" name="imag2">
+
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputFile3">(可选)图片3</label>
+                    <input type="file" id="exampleInputFile3" autocomplete="off" placeholder="图片3" name="imag3">
+
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputFile4">(可选)图片4</label>
+                    <input type="file" id="exampleInputFile4" autocomplete="off" placeholder="图片4" name="imag4">
+
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-default">上传</button>
+                    </div>
+                </div>
+            </form>
+            {{msg}}
+            {% endblock %}
+        </div>
+        {% endblock %}
+    </div>
+</div>
+</div>
+<!---->
+<div class="footer">
+    <div class="container">
+        <div class="footer-class">
+            <div class="class-footer">
+                <ul>
+                    <li><a href="{% url 'users:index' %}">HOME </a></li>
+                    <li><a href="{% url 'store:men' %}">男装</a></li>
+                    <li><a href="{% url 'store:women' %}">女装</a></li>
+                    <li><a href="{% url 'store:collection' %}">时尚</a></li>
+                </ul>
+                <p class="footer-grid">Copyright &copy; 2015.Company name All rights reserved.More Templates <a
+                        href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a
+                        href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></p>
+            </div>
+            <div class="footer-left">
+                <a href="{% url 'users:index' %}"><img src="{% static 'images/logo1.png' %}" alt=" "/></a>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+{% block script %}
+<script>
+
+</script>
+{% endblock %}
+</body>
+</html>

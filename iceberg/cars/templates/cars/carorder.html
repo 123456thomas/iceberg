@@ -1,0 +1,42 @@
+{% extends 'goods/single.html' %}
+
+{% block single %}
+{% if request.session.carsgood1|length == 0 %}
+您的购物车为空,赶紧去添加吧。
+{% else %}
+<table border="2" style="margin:2px auto"  cellpadding='3'>
+    <tr>
+        <th>图片</th>
+        <th>商品名</th>
+        <th>商品尺码</th>
+        <th>商品数量</th>
+        <th>商品单价</th>
+    </tr>
+    {% for u in request.session.carsgood1 %}
+    <tr>
+        <td><img width=80 height=100 src="/{{u.goodimg}}" alt=""></td>
+        <td><a href="/iceberg/single/?seach={{u.id}}">{{u.goodname}}</a></td>
+        <td>{{u.gooodsize}}</td>
+        <td>
+            <form action="{% url 'cars:updatelist' %}" method="get">
+                <input type="number" name="count" min="1" value={{u.goodnum}}>
+                <input type="hidden" name="sid" value={{u.id}}>
+                <button type="submit" name="del" value="0" class="btn btn-success">修改数量</button>
+                <button type="submit" name="del" value="1" class="btn btn-danger">删除订单</button>
+            </form>
+        </td>
+        <td>{{u.goodprice}}</td>
+    </tr>
+    {% empty %}
+    您的购物车为空
+    {% endfor %}
+</table>
+<div style="width:1200px;">
+    <div style="margin:10px auto;width:600px;position:relative;">
+        <span >总价：</span>{{sumcount}}元
+        <span style="float:right;"><a href="{% url 'cars:myorder' %}"><button class="btn btn-danger">提交订单</button></a></span>
+    </div>
+
+</div>
+{% endif %}
+{% endblock %}

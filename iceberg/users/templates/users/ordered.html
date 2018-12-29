@@ -1,0 +1,32 @@
+{% extends 'users/register.html' %}
+
+{% block register %}
+{% load static %}
+{% if request.session.user is None %}
+您还没登录，去登录吧
+{% else %}
+
+<p>我的已完成订单：</p>
+    <table class="table table-hover">
+        <tr>
+            <th>订单</th>
+            <th>邮寄地址</th>
+            <th>总额</th>
+        </tr>
+        {% for s in ordered %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <th>{{s.goodnumnam}}</th>
+                <th>{{s.acount}}</th>
+            </tr>
+
+        {% empty %}
+        您还没有订单
+        {% endfor %}
+    </table>
+
+{% endif %}
+<br>
+<h6 style="color:blue">{{msg}}</h6>
+
+{% endblock %}

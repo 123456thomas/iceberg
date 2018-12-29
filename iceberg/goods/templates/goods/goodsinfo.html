@@ -1,0 +1,59 @@
+{% extends 'goods/upgoods.html' %}
+
+{% block ulhead %}
+<ul class="nav nav-pills">
+    <li role="presentation"><a href="{% url 'users:index' %}">HOME </a></li>
+    <li role="presentation"><a href="{% url 'store:mystore' %}">店铺信息 </a></li>
+    <li role="presentation"><a href="{% url 'goods:upgoods' %}">上传商品 </a></li>
+    <li role="presentation" class="active"><a href="{% url 'goods:goodsinfo' %}">查看商品列表</a></li>
+</ul>
+{% endblock %}
+
+{% block content %}
+<br>
+<br>
+<table class="table table-hover">
+    <tr>
+        <th>#</th>
+        <th>商品名</th>
+        <th>库存</th>
+        <th>销量</th>
+        <th>价格(RMB)</th>
+        <th>状态</th>
+        <th>上/下架</th>
+    </tr>
+    {% for i in request.session.goodsli %}
+    <tr>
+        <td>{{forloop.counter}}</td>
+        <td><a href="/iceberg/detailinfo/?ware1={{i.id}}">{{i.waresname}}</a></td>
+        <td>{{i.waresstock}}</td>
+        <td>{{i.warescount}}</td>
+        <td>{{i.waresprice}}</td>
+        <td>
+            {% if i.warestatus %}
+            <h5>上架中</h5>
+            {% else %}
+            <h5>已下架</h5>
+            {% endif %}
+        </td>
+        <td>
+            {% if i.warestatus %}
+            <form action="{% url 'goods:updownGoods' %}" method="get">
+                <button type="submit" class="btn btn-warning du" name="ware" value={{i.id}}
+                        onclick="return confirm('是否确定下架')">下架
+                </button>
+            </form>
+            {% else %}
+            <form action="{% url 'goods:updownGoods' %}" method="get">
+                <button type="submit" class="btn btn-success du" name="ware" value={{i.id}}
+                        onclick="return confirm('是否确定重新上架')">上架
+                </button>
+            </form>
+            {% endif %}
+        </td>
+    </tr>
+    {% empty %}
+    <p>☹，还没商品</p>
+    {% endfor %}
+</table>
+{% endblock %}

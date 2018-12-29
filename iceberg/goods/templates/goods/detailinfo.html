@@ -1,0 +1,55 @@
+{% extends 'goods/upgoods.html' %}
+
+{% block ulhead %}
+<ul class="nav nav-pills">
+    <li role="presentation"><a href="{% url 'users:index' %}">HOME </a></li>
+    <li role="presentation"><a href="{% url 'store:mystore' %}">店铺信息 </a></li>
+    <li role="presentation"><a href="{% url 'store:mystore' %}">上传商品 </a></li>
+    <li role="presentation" class="active"><a href="{% url 'goods:goodsinfo' %}">查看商品列表</a></li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+<br>
+    <form action="{% url 'goods:updategoods' %}">
+        <button type="submit" class="btn btn-info">修改此商品信息</button>
+    </form>
+<br>
+<table class="table table-bordered" border=1>
+    <tr>
+        <th>商品名</th>
+        <th>库存</th>
+        <th>价格(RMB)</th>
+        <th>上架时间</th>
+        <th>商品类型</th>
+        <th>商品尺码</th>
+    </tr>
+    <tr>
+        <td>{{request.session.ware1.waresname}}</td>
+        <td>{{request.session.ware1.waresstock}}</td>
+        <td>{{request.session.ware1.waresprice}}</td>
+        <td>{{request.session.ware1.borntime}}</td>
+        <td>
+            {{request.session.categorys.category1}}
+            {{request.session.categorys.category2}}
+        </td>
+        <td>{{request.session.ware1.waressize}}</td>
+    </tr>
+    <tr>
+        <td><h4>商品详情:</h4></td>
+        <td colspan="5">{{request.session.ware1.waresinfo}}</td>
+    </tr>
+    <tr>
+        <td><h4>商品图片:</h4></td>
+        <td colspan="5">
+            {% for x in request.session.imgli %}
+            <img width=19% height=90% src="/{{x.imag0}}" alt="">
+            {% empty %}
+            <p>o(︶︿︶)o 唉，还没有图片</p>
+            {% endfor %}
+        </td>
+    </tr>
+</table>
+<h5>图片最多5张</h5>
+
+{% endblock %}
